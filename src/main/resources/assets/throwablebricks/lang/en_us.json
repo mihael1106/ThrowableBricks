@@ -1,0 +1,6 @@
+{
+  "entity.throwablebricks.brick": "Brick",
+  "death.attack.throwablebricks:brick": "A brick fell on %s because of %s",
+  "death.attack.throwablebricks:brick.item": "A brick fell on %s because of %s using %s",
+  "death.attack.throwablebricks:brick.player": "A brick fell on %s whilst trying to escape %s."
+}

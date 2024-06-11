@@ -1,6 +1,7 @@
 package com.miki.throwablebricks.entity;
 
 import com.miki.throwablebricks.Config;
+import com.miki.throwablebricks.DamageTypeInit;
 import com.miki.throwablebricks.item.ItemInit;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
@@ -51,7 +52,7 @@ public class Brick extends ThrowableItemProjectile {
 
     protected void onHitEntity(@NotNull EntityHitResult hitResult) {
         super.onHitEntity(hitResult);
-        hitResult.getEntity().hurt(this.damageSources().thrown(this, this.getOwner()), Config.damage);
+        hitResult.getEntity().hurt(this.damageSources().source(DamageTypeInit.BRICK, this, this.getOwner()), Config.damage);
     }
 
     protected void onHit(@NotNull HitResult hitResult) {

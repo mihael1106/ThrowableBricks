@@ -5,6 +5,7 @@ license="MIT License"
 [[mods]] #mandatory
 modId="throwablebricks" #mandatory
 version="1.0" #mandatory
+logoFile="logo.png" #optional
 displayName="Throwable Bricks" #mandatory
 authors="Miki1106" #optional
 description='''Makes Bricks throwable.
