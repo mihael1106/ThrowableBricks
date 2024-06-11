@@ -7,6 +7,7 @@ modId="throwablebricks" #mandatory
 version="1.0" #mandatory
 logoFile="logo.png" #optional
 displayName="Simple Throwable Bricks" #mandatory
+credits="Thanks to TurtyWurty and YodaForce157 for helping me out in TurtyWurty's discord server."
 authors="Miki1106" #optional
 description='''Makes Bricks throwable.
 Because why not?'''
