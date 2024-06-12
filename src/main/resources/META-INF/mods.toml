@@ -20,6 +20,6 @@ Because why not?'''
 [[dependencies.throwablebricks]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.20.4,)"
+    versionRange="[1.20.6,)"
     ordering="NONE"
     side="BOTH"

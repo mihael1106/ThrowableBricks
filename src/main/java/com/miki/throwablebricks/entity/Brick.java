@@ -35,7 +35,7 @@ public class Brick extends ThrowableItemProjectile {
     }
 
     private ParticleOptions getParticle() {
-        ItemStack stack = this.getItemRaw();
+        ItemStack stack = this.getItem();
         return stack.isEmpty() ? new ItemParticleOption(ParticleTypes.ITEM, ItemInit.BRICK.get().getDefaultInstance()) : new ItemParticleOption(ParticleTypes.ITEM, stack);
     }
 
