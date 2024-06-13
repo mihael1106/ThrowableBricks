@@ -6,5 +6,5 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
 
 public class DamageTypeInit {
-    public static final ResourceKey<DamageType> BRICK = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ThrowableBricks.MODID, "brick"));
+    public static final ResourceKey<DamageType> BRICK = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ThrowableBricks.MODID, "brick"));
 }

@@ -16,6 +16,6 @@ public class EntityInit {
                     .sized(0.25F, 0.25F)
                     .clientTrackingRange(4)
                     .updateInterval(10)
-                    .build(new ResourceLocation(ThrowableBricks.MODID, "brick").toString())
+                    .build(ResourceLocation.fromNamespaceAndPath(ThrowableBricks.MODID, "brick").toString())
     );
 }

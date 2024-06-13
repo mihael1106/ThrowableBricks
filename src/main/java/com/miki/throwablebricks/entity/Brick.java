@@ -26,8 +26,12 @@ public class Brick extends ThrowableItemProjectile {
         return new Brick(entityType, level);
     }
 
-    public Brick(Level p_37399_, LivingEntity p_37400_) {
-        super(EntityInit.BRICK.get(), p_37400_, p_37399_);
+    public Brick(Level level, LivingEntity entity) {
+        super(EntityInit.BRICK.get(), entity, level);
+    }
+
+    public Brick(Level p_37394_, double p_37395_, double p_37396_, double p_37397_) {
+        super(EntityInit.BRICK.get(), p_37395_, p_37396_, p_37397_, p_37394_);
     }
 
     protected @NotNull Item getDefaultItem() {
