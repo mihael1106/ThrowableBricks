@@ -1,65 +1,73 @@
 package com.miki.throwablebricks.entity;
 
 import com.miki.throwablebricks.Config;
-import com.miki.throwablebricks.DamageTypeInit;
 import com.miki.throwablebricks.item.ItemInit;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import org.jetbrains.annotations.NotNull;
+import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ProjectileItemEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ItemParticleData;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class Brick extends ThrowableItemProjectile {
-    public Brick(EntityType<? extends ThrowableItemProjectile> entityType, Level level) {
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@MethodsReturnNonnullByDefault
+public class Brick extends ProjectileItemEntity {
+    public Brick(EntityType<? extends ProjectileItemEntity> entityType, World level) {
         super(entityType, level);
     }
 
-    public static Brick create(EntityType<? extends ThrowableItemProjectile> entityType, Level level) {
+    public static Brick create(EntityType<? extends ProjectileItemEntity> entityType, World level) {
         return new Brick(entityType, level);
     }
 
-    public Brick(Level p_37399_, LivingEntity p_37400_) {
+    public Brick(World p_37399_, LivingEntity p_37400_) {
         super(EntityInit.BRICK.get(), p_37400_, p_37399_);
     }
 
-    protected @NotNull Item getDefaultItem() {
-        return Items.BRICK;
+    protected Item getDefaultItem() {
+        return ItemInit.BRICK.get();
     }
 
-    private ParticleOptions getParticle() {
+    private IParticleData getParticle() {
         ItemStack stack = this.getItemRaw();
-        return stack.isEmpty() ? new ItemParticleOption(ParticleTypes.ITEM, ItemInit.BRICK.get().getDefaultInstance()) : new ItemParticleOption(ParticleTypes.ITEM, stack);
+        return stack.isEmpty() ? new ItemParticleData(ParticleTypes.ITEM, ItemInit.BRICK.get().getDefaultInstance()) : new ItemParticleData(ParticleTypes.ITEM, stack);
     }
 
+
+    @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte type) {
         if (type == 3) {
-            ParticleOptions particle = this.getParticle();
+            IParticleData particle = this.getParticle();
 
             for(int i = 0; i < 8; ++i) {
-                this.level().addParticle(particle, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+                this.level.addParticle(particle, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }
         }
 
     }
 
-    protected void onHitEntity(@NotNull EntityHitResult hitResult) {
-        super.onHitEntity(hitResult);
-        hitResult.getEntity().hurt(this.damageSources().source(DamageTypeInit.BRICK, this, this.getOwner()), Config.damage);
+    @ParametersAreNonnullByDefault
+    protected void onHitEntity(EntityRayTraceResult traceResult) {
+        super.onHitEntity(traceResult);
+        traceResult.getEntity().hurt(new IndirectEntityDamageSource("throwablebricks:brick", this, this.getOwner()).setProjectile(), Config.damage);
     }
 
-    protected void onHit(@NotNull HitResult hitResult) {
-        super.onHit(hitResult);
-        if (!this.level().isClientSide) {
-            this.level().broadcastEntityEvent(this, (byte) 3);
-            this.discard();
+    @ParametersAreNonnullByDefault
+    protected void onHit(RayTraceResult traceResult) {
+        super.onHit(traceResult);
+        if (!this.level.isClientSide) {
+            this.level.broadcastEntityEvent(this, (byte)3);
+            this.remove();
         }
 
     }

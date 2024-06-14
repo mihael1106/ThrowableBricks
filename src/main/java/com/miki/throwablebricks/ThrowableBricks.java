@@ -2,11 +2,13 @@ package com.miki.throwablebricks;
 
 import com.miki.throwablebricks.entity.EntityInit;
 import com.miki.throwablebricks.item.ItemInit;
-import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.SnowManRenderer;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -33,6 +35,6 @@ public class ThrowableBricks
 
     private void clientSetup(FMLClientSetupEvent event)
     {
-        EntityRenderers.register(EntityInit.BRICK.get(), ThrownItemRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.BRICK.get(), render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     }
 }
